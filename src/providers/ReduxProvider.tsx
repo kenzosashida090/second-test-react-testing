@@ -1,9 +1,8 @@
 import { PropsWithChildren } from "react";
-import { Provider } from "react-redux";
-import { createStore } from "../store/store";
+import { createStoreHook, Provider } from "react-redux";
 
 const ReduxProvider = ({ children }: PropsWithChildren) => {
-  const store = createStore();
+  const store:any = createStoreHook();
 
   return <Provider store={store}>{children}</Provider>;
 };
