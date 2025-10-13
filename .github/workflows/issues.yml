@@ -1,0 +1,8 @@
+name: Generate issue report
+on: issues
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue report print
+        run: echo${{ toJSON(github) }}
