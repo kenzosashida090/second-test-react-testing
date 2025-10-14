@@ -5,18 +5,18 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Get code
-  #       uses: actions/checkout@v3
+  #       uses: actions/checkout@v3DB_BAME
   #     - name: Install dependencies
   #       run: npm ci
   #     - name: Run lint
   #       run: npm run lint
   env:
-    DB_BAME: 'Test'
+    DB_NAME: Test
   test:
     enviorment: testing # access to the repository keys
     env:
       DB_CLUSTER_ADDRESSS: 1234
-      DB_USERNAME: ${{secrets.DB_USERNAME}}
+      DB_USERNAME: ${{secrets.DB_NAME}}
       DB_PASSWORD: ${{secrets.DB_PASSWORD}}
       PORT: 8080
     runs-on: ubuntu-latest
