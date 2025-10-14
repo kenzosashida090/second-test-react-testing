@@ -13,7 +13,7 @@ jobs:
   #     - name: Run lint
   #       run: npm run lint
   test:
-    enviroment: testing # access to the repository keys
+    environment: testing # access to the repository keys
     env:
       DB_CLUSTER_ADDRESSS: 1234
       DB_USERNAME: ${{secrets.DB_NAME}}
