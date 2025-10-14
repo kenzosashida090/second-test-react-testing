@@ -31,7 +31,7 @@ jobs:
       scripts-file: ${{ steps.publish.outputs.script-file }} # could be different name of the value scripts-file we can name it ourselfs
     steps:
       - name: Get code
-        uses: actions/checkout@v4 # this is a community action that download code
+        uses: actions/checkout@v3 # this is a community action that download code
       #- #name: Install nodejs #ubuntu already install nodejs
         #uses: actions/setup-node@v3
         #with: 
