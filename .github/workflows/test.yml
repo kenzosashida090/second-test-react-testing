@@ -16,9 +16,14 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3 # this is a community action that download code
       #- #name: Install nodejs #ubuntu already install nodejs
-        #uses: actions/setup-node@v3
+        #uses: actions/setup-node@v3  
         #with: 
         #  node-version: 22.15
+      - name: Cache dependencies
+        uses: actions/cache@v3 # caching the dependencies
+        with:
+          path: ~/.npm # npm will know that is a dependencie cache
+          key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
       - name: Install dependencies
         run: npm ci # this is more safe than npm install
 
@@ -36,6 +41,11 @@ jobs:
         #uses: actions/setup-node@v3
         #with: 
         #  node-version: 22.15
+      - name: Cache dependencies
+        uses: actions/cache@v3 # caching the dependencies
+        with:
+          path: ~/.npm # npm will know that is a dependencie cache
+          key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
       - name: Install dependencies
         run: npm ci # this is more safe than npm install
       - name: Build project
