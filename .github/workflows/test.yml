@@ -50,6 +50,7 @@ jobs:
           name: dist-files
           path: dist  # to add multple files we set the key | and enter. then set the files that we want                  
   downloadDeploy:
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
