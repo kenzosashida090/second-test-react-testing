@@ -27,6 +27,8 @@ jobs:
   deploy:
     needs: 'test' 
     runs-on: ubuntu-latest
+    outputs:
+      scripts-file: ${{ steps.publish.outputs.script-file }} # could be different name of the value scripts-file we can name it ourselfs
     steps:
       - name: Get code
         uses: actions/checkout@v3 # this is a community action that download code
@@ -38,5 +40,21 @@ jobs:
         run: npm ci # this is more safe than npm install
       - name: Build project
         run: npm run build
+      - name: Publish JS filename
+        id: publish  # to access the filename value
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+
+      - name: Upload artifacts
+        uses: actions/upload-artifacts@v3
+        with:
+          name: dist-files
+          path: dist  # to add multple files we set the key | and enter. then set the files that we want                  
+  downloadDeploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
-        run: echo "Deploying ...."
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files # has to be the same name file that we download
+      - name: Output contents
+        run: ls # list of the contain of the dist file.   
