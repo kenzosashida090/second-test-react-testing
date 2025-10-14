@@ -45,7 +45,7 @@ jobs:
         run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
 
       - name: Upload artifacts
-        uses: actions/upload-artifacts@v3
+        uses: actions/upload-artifacts@v4
         with:
           name: dist-files
           path: dist  # to add multple files we set the key | and enter. then set the files that we want                  
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-files # has to be the same name file that we download
       - name: Output contents
