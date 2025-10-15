@@ -39,14 +39,19 @@ jobs:
         id: run-test
         run: npm run test
       - name: Upload test report if fails
+      # Other way to continue the workflow even if a step fails we set the command continue-on-error: true
         if: failure() && steps.run-test.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: json-report.json
   deploy:
+    strategy:
+      matrix:
+        node-version: [20,22,23]
+        os: ['ubuntu-latest', 'windows-latest']
     needs: 'test' 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     outputs:
       scripts-file: ${{ steps.publish.outputs.script-file }} # could be different name of the value scripts-file we can name it ourselfs
     steps:
@@ -59,9 +64,10 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3 # caching the dependencies
         with:
-          path: ~/.npm # npm will know that is a dependencie cache
-          key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
+          path: node_modules # npm will know that is a dependencie cache
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true' # This is from cache actions will return a boolean if its available to use cache.
         run: npm ci # this is more safe than npm install
       - name: Build project
         run: npm run build
