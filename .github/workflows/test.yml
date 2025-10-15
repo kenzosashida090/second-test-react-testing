@@ -45,8 +45,8 @@ jobs:
         with:
           name: test-report
           path: json-report.json
-      - name: 'deploy workflow'
-        uses: ./.github/workflows/output.yml
+      # - name: 'deploy workflow'
+      #   uses: ./.github/workflows/output.yml
   deploy:
     continue-on-error: true
     strategy:
