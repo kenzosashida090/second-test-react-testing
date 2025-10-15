@@ -1,5 +1,5 @@
 name: Output information
-on: workflow_dispatch
+on: workflow_call # this trigger will allow us to call this workflow in another workflow
 jobs:
   info:
     runs-on: ubuntu-latest
