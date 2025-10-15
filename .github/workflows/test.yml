@@ -46,6 +46,7 @@ jobs:
           name: test-report
           path: json-report.json
   deploy:
+    continue-on-error: true
     strategy:
       matrix:
         node-version: [20,22,23]
