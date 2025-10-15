@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "server": "json-server --watch src/data/db.json --delay 500",
     "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "test": "vitest",
+    "test": "vitest --reporter=json ",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
