@@ -15,7 +15,6 @@ jobs:
       - name: Output Github context
         run: echo "${{ toJSON(github) }}"
   downloadDeploy:
-    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
