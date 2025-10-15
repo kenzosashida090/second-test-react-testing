@@ -51,6 +51,13 @@ jobs:
       matrix:
         node-version: [20,22,23]
         os: ['ubuntu-latest', 'windows-latest']
+        include: 
+          - node-version: 18
+            os: ubuntu-latest
+        exclude:
+          - node-version: 20
+            os: windows-latest
+
     needs: 'test' 
     runs-on: ${{ matrix.os }}
     outputs:
