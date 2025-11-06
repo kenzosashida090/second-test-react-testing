@@ -1,16 +1,22 @@
       
 name: 'Get & Cache dependecies'
 description: 'Get dependencies (via npm) and cache them.'
+inputs: # Recive customize inputs like allowing to disabled caching dependencies
+  caching:
+    description: 'Whether to cache dependen cies or not.'
+    required:false
+    default: 'true'
 runs:
   using: 'composite'
   steps:
     - name: Cache dependencies
+      if: inputs.caching == 'true'
       id: cache
       uses: actions/cache@v3 # caching the dependencies
       with:
         path: ~/.npm # npm will know that is a dependencie cache
         key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: npm ci
       shell: bash
