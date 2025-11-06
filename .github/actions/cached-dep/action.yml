@@ -4,7 +4,7 @@ description: 'Get dependencies (via npm) and cache them.'
 inputs: # Recive customize inputs like allowing to disabled caching dependencies
   caching:
     description: 'Whether to cache dependen cies or not.'
-    required:false
+    required: false
     default: 'true'
 runs:
   using: 'composite'
