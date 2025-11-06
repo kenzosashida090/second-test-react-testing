@@ -11,5 +11,6 @@ runs:
         path: ~/.npm # npm will know that is a dependencie cache
         key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
     - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
