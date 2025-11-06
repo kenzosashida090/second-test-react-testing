@@ -28,10 +28,12 @@ jobs:
         #with: 
         #  node-version: 22.15
       - name: Load and cahce dependencies from custom action compise # this is more safe than npm install
+        id: cache-deps
         uses: ./.github/actions/cached-dep
         with:
           caching: 'false' # this  is a custome input, basically tells to no cache the dependencies 
         #run: echo "$PORT" # Access to the env value
+        run: echo "cache used ? ${{ steps.cache-deps.outputs.used-cache }}"
       - name: Run test
         id: run-test
         run: npm run test

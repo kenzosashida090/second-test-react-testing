@@ -6,6 +6,10 @@ inputs: # Recive customize inputs like allowing to disabled caching dependencies
     description: 'Whether to cache dependen cies or not.'
     required: false
     default: 'true'
+outputs:
+  used-cache:
+    description: 'Wheter the cache was used.'
+    value: ${{ steps.install.outputs.cache }} #  set an output in this case as an example we return the value that  the user set wether cached or not
 runs:
   using: 'composite'
   steps:
@@ -17,6 +21,9 @@ runs:
         path: ~/.npm # npm will know that is a dependencie cache
         key: deps-node-modules-${{ hashFiles('**/package-loc.json') }} # whenever the file change the hash will change thus the dependencie folder will be re install
     - name: Install dependencies
+      id: install # Id to access to the value of an output
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
-      run: npm ci
+      run: | 
+        npm ci
+        echo"::set-output name=cache::'${{ inputs.caching }}'"
       shell: bash
