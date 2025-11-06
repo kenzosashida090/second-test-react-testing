@@ -7,6 +7,10 @@ on:
         required: false
         default: dist
         type: string
+    outputs:
+      result:
+        description: Result of the deployment operation
+        value: ${{ jobs.downloadDeploy.outputs.outcome }}
 
 jobs:
   info:
@@ -15,6 +19,8 @@ jobs:
       - name: Output Github context
         run: echo "${{ toJSON(github) }}"
   downloadDeploy:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
@@ -24,4 +30,11 @@ jobs:
       - name: Access value
         run: echo "${{ needs.build.outputs.script-file }}"
       - name: Output contents
-        run: ls # list of the contain of the dist file.   \
+        # run: ls # list of the contain of the dist file.   \
+        run: echo "step-result=success" >> $GITHUB_OUTPUT # RETURN THE VALUE step-result= success to access this in other workflow
+  print-deploy-result:
+    needs: downloadDeploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deploy value
+        run: echo "${{ needs.deploy.outputs.result }}"
