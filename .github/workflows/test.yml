@@ -33,6 +33,7 @@ jobs:
         with:
           caching: 'false' # this  is a custome input, basically tells to no cache the dependencies 
         #run: echo "$PORT" # Access to the env value
+      - name: Output information
         run: echo "cache used ? ${{ steps.cache-deps.outputs.used-cache }}"
       - name: Run test
         id: run-test
